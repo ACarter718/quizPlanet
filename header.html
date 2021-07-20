@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="google-signin-client_id" content="440943348948-ssjnh89llhemg5dabrdekjo2kkvho5q1.apps.googleusercontent.com">
+    
+    	<title>
+			<?php echo $page_title; ?>
+		</title>
+		
+		<!-- <script src="https://apis.google.com/js/platform.js" async defer> -->
+		<script src="https://apis.google.com/js/platform.js?onload=init" async defer>
+		var auth2;	
+		
+		var init = function() {
+			gapi.load('auth2', function(){
+				// Retrieve the singleton for the GoogleAuth library and set up the client.
+				auth2 = gapi.auth2.init({
+					client_id: '440943348948-ssjnh89llhemg5dabrdekjo2kkvho5q1.apps.googleusercontent.com'
+				});
+
+			});
+		};
+		
+		</script>
+		
+	</head>
+	<body>
+		<div class="g-signin2" data-onsuccess="onSignIn" id="signin-button" style="display: none;"></div>
+		<a href="loginPage.php">Login Page</a> | <a href="home.php">Home</a> | <a href="logout.php">Logout</a>
+		| <a href="destroySession.php">clear Session</a> | <a href="destroySession.php" >destroy session</a>
+	<?php
+		function clean($data) {
+			global $dbConn;
+			return  mysqli_real_escape_string($dbConn, trim($data));	
+		}
+	?>
+		
+		
+	

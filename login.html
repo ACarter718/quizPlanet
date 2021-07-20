@@ -1,0 +1,75 @@
+	<p id="salutation">Who are you?</p>
+    <div class="g-signin2" data-onsuccess="onSignIn" style="margin: 20px;"></div>
+	
+	<form action="loginPage.php" method="post" id="loginForm">
+		<input name="idEmail" id="idEmail" type="hidden">
+		<input name="idGivenName" id="idGivenName" type="hidden">
+		<input name="idFamilyName" id="idFamilyName" type="hidden">
+		<input name="idPicture" id="idPicture" type="hidden">
+		<!-- <p><strong>Login to Carter's Quizzes</strong></p>
+		<p>Username : <input name="myusername" type="text" id="myusername"></p>
+		<p>Password: <input name="mypassword" type="password" type="text"  id="mypassword"></p>
+		<p><input type="submit" name="Submit" value="Login"></p> -->
+	</form>
+	
+    <a href="#" onclick="signOut();">Sign out</a>
+    
+    <script>
+		var salutation = document.getElementById("salutation");
+		var theForm = document.getElementById("loginForm");
+		var idEmail = document.getElementById("idEmail");
+		var idGivenName = document.getElementById("idGivenName");
+		var idPicture = document.getElementById("idPicture");
+		var idFamilyName = document.getElementById("idFamilyName");
+		var profile = "empty";
+		
+        function onSignIn(googleUser) {
+            profile = googleUser.getBasicProfile();
+			console.log("googleUser(type): " + typeof googleUser);
+			
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('First Name: ' + profile.getGivenName());
+            console.log('Last Name: ' + profile.getFamilyName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            
+            salutation.textContent = `Hello ${profile.getEmail()}`;
+			
+			
+			
+			
+			
+        }
+		
+		function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+            
+        }
+		
+		function submit_form() {
+			
+			if (profile != "empty") {
+				idEmail.value =  profile.getEmail();
+				idGivenName.value = profile.getGivenName();
+				idFamilyName.value = profile.getFamilyName();
+				idPicture.value = profile.getImageUrl();
+			} 	
+			
+			
+			theForm.submit();
+		}
+
+    </script>
+	<input name="myBtn" type="button" value="Continue" onClick="javascript:submit_form();"/>
+	<!-- <form action="post_login.php" method="post">
+		<p><strong>Login to Carter's Quizzes</strong></p>
+		<p>Username : <input name="myusername" type="text" id="myusername"></p>
+		<p>Password: <input name="mypassword" type="password" type="text"  id="mypassword"></p>
+		<p><input type="submit" name="Submit" value="Login"></p>
+	</form> -->
+	<!-- <p><a href="newLogin.php">New Login</a></p> -->
+
